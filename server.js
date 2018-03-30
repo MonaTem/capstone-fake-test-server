@@ -13,7 +13,8 @@ app.use(morgan('tiny'));
 app.use(cors());
 
 
-const jsonFile = (name) => path.join(__dirname, './data', `${name}.json`)
+//const jsonFile = (name) => path.join(__dirname, './data', `${name}.json`)
+//const jsonFile = (name) => path.join('/data', `${name}.json`);
 
 /*
   to get started
@@ -35,9 +36,12 @@ const jsonFile = (name) => path.join(__dirname, './data', `${name}.json`)
   ]
 */
 
+app.use(express.static('public'))
+app.use(morgan('combined'));
+
 
 app.get('/api/main_characters', (req, res) => {
-  res.sendFile(jsonFile('main_characters'));
+  res.sendFile('/data/main_characters');
 });
 
 
@@ -74,15 +78,27 @@ app.get('/api/main_characters', (req, res) => {
    in the data/main_character/1/sad_story.json
   */
 
-app.get('/api/main_characters/:id/sad_story', (req, res) => {
+app.get('main_characters/:id/sad_story', (req, res) => {
   const id = req.params.id;
-  res.sendFile(jsonFile('/main_characters/${id}/sad_story'))
+  // console.log("root is " + root);
+  // res.sendFile('data/main_characters/1/sad_story')
+  res.sendFile("data/main_characters/1/sad_story.json", { root: path.join(__dirname, 'public') })
+
 })
 
-app.get('/api/main_characters/:id/happy_story', (req, res) => {
+app.get('main_characters/:id/happy_story', (req, res) => {
   const id = req.params.id;
-  res.sendFile(jsonFile('/main_characters/${id}/happy_story'))
+  // res.sendFile(jsonFile('data/main_characters/1/happy_story'))
+  // res.sendFile("happy_story.json", { root: path.join(__dirname, 'public') })
+  res.sendFile("data/main_characters/1/happy_story.json", { root: path.join(__dirname, 'public') })
 })
+
+/*
+app.get('*', function (req, res) {
+  res.sendFile("index.html", { root: path.join(__dirname, 'public') })
+})
+*/
+
 
 app.listen(PORT, () => {
   console.log('STARTING ON', PORT);
