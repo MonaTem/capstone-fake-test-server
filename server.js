@@ -12,8 +12,15 @@ const app = express();
 app.use(morgan('tiny'));
 app.use(cors());
 
+const name = 'happy_story';
+// const jsonFile = (name) => path.join(__dirname, './data', `${name}.json`);
 
-//const jsonFile = (name) => path.join(__dirname, './data', `${name}.json`)
+const jsonFile = path.join(__dirname, '/data/stories/1', `${name}.json`);
+//
+// const jsonFILE = path.join(__dirname, './data', `${name}.json`);
+
+console.log(`jsonFile is ${jsonFile}`);
+
 //const jsonFile = (name) => path.join('/data', `${name}.json`);
 
 /*
@@ -35,13 +42,16 @@ app.use(cors());
     }
   ]
 */
-
-app.use(express.static('public'))
+app.use(express.static('public'));
 app.use(morgan('combined'));
 
+console.log("the path is " + __dirname);
+
+console.log
 
 app.get('/api/stories', (req, res) => {
-  res.sendFile('/data/stories');
+  // res.sendFile('/data/stories/1/happy_story.json');
+  res.sendFile(jsonFile);
 });
 
 
