@@ -12,22 +12,22 @@ const app = express();
 app.use(morgan('tiny'));
 app.use(cors());
 
-const name = 'happy_story';
-// const jsonFile = (name) => path.join(__dirname, './data', `${name}.json`);
+let name = 'sad_story';
+// const textFile = (name) => path.join(__dirname, './data', `${name}.text`);
 
-const jsonFile = path.join(__dirname, '/data/stories/1', `${name}.json`);
+let textFile = path.join(__dirname, '/data/stories/1', `${name}.text`);
 //
-// const jsonFILE = path.join(__dirname, './data', `${name}.json`);
+// const textFILE = path.join(__dirname, './data', `${name}.text`);
 
-console.log(`jsonFile is ${jsonFile}`);
+console.log(`textFile is ${textFile}`);
 
-//const jsonFile = (name) => path.join('/data', `${name}.json`);
+//const textFile = (name) => path.join('/data', `${name}.text`);
 
 /*
   to get started
 
   mkdir data
-  touch main_characters.json
+  touch main_characters.text
 
   then write some character data into the file
 
@@ -50,8 +50,8 @@ console.log("the path is " + __dirname);
 console.log
 
 app.get('/api/stories', (req, res) => {
-  // res.sendFile('/data/stories/1/happy_story.json');
-  res.sendFile(jsonFile);
+  // res.sendFile('/data/stories/1/happy_story.text');
+  res.sendFile(textFile);
 });
 
 
@@ -60,12 +60,12 @@ app.get('/api/stories', (req, res) => {
 
     mkdir -p data/main_characters/{1,2}
 
-    touch data/main_characters/{1,2}/{sad,happy}_story.json
+    touch data/main_characters/{1,2}/{sad,happy}_story.text
 
   then write some data into each story file
 
   for example
-    /data/main_characters/1/happy_story.json
+    /data/main_characters/1/happy_story.text
 
   Would have
 
@@ -85,23 +85,40 @@ app.get('/api/stories', (req, res) => {
       "text": "Bear went to the store. Bear looked for milk. The store was out of milk."
     }
 
-   in the data/main_character/1/sad_story.json
+   in the data/main_character/1/sad_story.text
   */
 
-app.get('stories/:id/sad_story', (req, res) => {
-  const id = req.params.id;
+// app.get('api/stories/1/sad_story', (req, res) => {
+  // const id = req.params.id;
   // console.log("root is " + root);
   // res.sendFile('data/main_characters/1/sad_story')
-  res.sendFile("data/stories/1/sad_story.json", { root: path.join(__dirname, 'public') })
+  // res.sendFile("data/stories/1/sad_story.text") })
+  // , { root: path.join(__dirname, 'public') })
 
+// })
+
+app.get('/api/stories/:id/sad_story', (req, res) => {
+  // const id = req.params.id;
+  // res.sendFile(`/data/stories/${id}/sad_story.text`)
+  res.sendFile(textFile)
 })
 
-app.get('stories/:id/happy_story', (req, res) => {
+app.get('/api/stories/:id/happy_story', (req, res) => {
   const id = req.params.id;
-  // res.sendFile(jsonFile('data/main_characters/1/happy_story'))
-  // res.sendFile("happy_story.json", { root: path.join(__dirname, 'public') })
-  res.sendFile("data/stories/1/happy_story.json", { root: path.join(__dirname, 'public') })
+  //let story = 'happy_story';
+  // let txtFile = (story) => path.join(__dirname, './data', `${story}.text`);
+  // console.log(txtFile);
+  res.sendFile(path.join(__dirname, `data/stories/${id}/happy_story.text`));
 })
+
+
+// app.get('api/stories/1/happy_story', (req, res) => {
+  // const id = req.params.id;
+  // res.sendFile(textFile('data/main_characters/1/happy_story'))
+  // res.sendFile("happy_story.text", { root: path.join(__dirname, 'public') })
+  // res.sendFile("data/stories/1/happy_story.text") })
+  // , { root: path.join(__dirname, 'public') })
+// })
 
 /*
 app.get('*', function (req, res) {
