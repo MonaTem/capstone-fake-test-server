@@ -98,9 +98,10 @@ app.get('/api/stories', (req, res) => {
 // })
 
 app.get('/api/stories/:id/sad_story', (req, res) => {
-  // const id = req.params.id;
+  const id = req.params.id;
   // res.sendFile(`/data/stories/${id}/sad_story.text`)
-  res.sendFile(textFile)
+  // res.sendFile(textFile)
+  res.sendFile(path.join(__dirname, `data/stories/${id}/sad_story.text`));
 })
 
 app.get('/api/stories/:id/happy_story', (req, res) => {
